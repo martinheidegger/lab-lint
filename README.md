@@ -21,7 +21,9 @@ Create a unit test in your /test folder and add following lines:
 var dirname = __dirname;
 /*jslint nomen: false */
 
-require("lab-lint")(dirname);
+var Lab = require("lab");
+
+require("lab-lint")(Lab, dirname);
 ```
 
 This will automatically add linting of all .js files in the /lib and /test folder of your project. (yes, it is opinionated :-p)

@@ -1,6 +1,6 @@
 {
   "name": "lab-lint",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Lint test to be integrated into the lab test system.",
   "main": "index.js",
   "scripts": {
@@ -23,7 +23,9 @@
   },
   "homepage": "https://github.com/martinheidegger/lab-lint",
   "dependencies": {
-    "lab": "~1.7.0",
     "jslint": "~0.2.11"
+  },
+  "devDependencies": {
+    "lab": "~1.7.0"
   }
 }

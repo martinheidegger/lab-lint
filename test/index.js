@@ -8,8 +8,8 @@ var Lab = require("lab"),
     lintTest = require("../"),
     fs = require("fs");
 
-lintTest(dirname);
-lintTest(dirname + "/test_lint_config/test");
+lintTest(Lab, dirname);
+lintTest(Lab, dirname + "/test_lint_config/test");
 
 Lab.experiment("Not easily testable stuff:", function () {
 
