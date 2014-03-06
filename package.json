@@ -1,10 +1,10 @@
 {
   "name": "lab-lint",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Lint test to be integrated into the lab test system.",
   "main": "index.js",
   "scripts": {
-    "test": "lab -r threshold"
+    "test": "./node_modules/.bin/lab -r threshold"
   },
   "repository": {
     "type": "git",
@@ -23,7 +23,8 @@
   },
   "homepage": "https://github.com/martinheidegger/lab-lint",
   "dependencies": {
-    "jslint": "~0.2.11"
+    "jslint": "~0.2.11",
+    "glob": "~3.2.9"
   },
   "devDependencies": {
     "lab": "~1.7.0"
