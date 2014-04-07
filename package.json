@@ -1,6 +1,6 @@
 {
   "name": "lab-lint",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Lint test to be integrated into the lab test system.",
   "main": "index.js",
   "scripts": {

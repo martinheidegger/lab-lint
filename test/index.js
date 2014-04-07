@@ -6,8 +6,10 @@ var dirname = __dirname;
 
 var Lab = require("lab"),
     lintTest = require("../"),
-    fs = require("fs");
+    fs = require("fs"),
+    path = require("path");
 
+/* Easily testable stuff */
 lintTest(Lab, dirname);
 lintTest(Lab, dirname + "/test_lint_config/test");
 
@@ -25,6 +27,13 @@ Lab.experiment("Not easily testable stuff:", function () {
         throw new Error("error not thrown");
     });
 
+    Lab.test("Error wrapper should be able to deal with no error", function (done) {
+        lintTest.throwErrorWrapper(function (value) {
+            Lab.expect(value).to.equal("hi");
+        })(null, "hi");
+        done();
+    });
+
     Lab.test("Error wrapper should be able to deal with errors", function (done) {
         try {
             lintTest.throwErrorWrapper(null)(new Error("hi"));
@@ -39,15 +48,19 @@ Lab.experiment("Not easily testable stuff:", function () {
 
     Lab.test("Loading a not existant config should return an error", function (done) {
         var testFolder = dirname + "/test_lint_config",
-            jsLintFile = testFolder + "/.jslint";
-        fs.chmod(jsLintFile, "0s200", function (error) {
+            jsLintFile = testFolder + "/.jslint",
+            testError;
+        fs.chmod(jsLintFile, "0200", function (error) {
             Lab.expect(error).to.equal(null);
-            lintTest.loadConfig(testFolder + "/test", function (testError) {
-                fs.chmod(jsLintFile, "0644", function (error) {
-                    Lab.expect(error).to.equal(null);
-                    Lab.expect(testError).to.not.equal(null);
-                    done();
-                });
+            try {
+                lintTest.loadConfig(testFolder + "/test");
+            } catch (err) {
+                testError = err;
+            }
+            fs.chmod(jsLintFile, "0644", function (error) {
+                Lab.expect(error).to.equal(null);
+                Lab.expect(testError).to.not.equal(null);
+                done();
             });
         });
     });
@@ -67,9 +80,13 @@ Lab.experiment("Not easily testable stuff:", function () {
     });
 
     Lab.test("Loading a broken config should return an error", function (done) {
-        lintTest.loadConfig(dirname + "/test_broken_lint_config/test", function (error) {
-            Lab.expect(error).to.not.equal(null);
-            done();
-        });
+        var testError;
+        try {
+            lintTest.loadConfig(dirname + "/test_broken_lint_config/test");
+        } catch (err) {
+            testError = err;
+        }
+        Lab.expect(testError).to.not.equal(null);
+        done();
     });
 });
